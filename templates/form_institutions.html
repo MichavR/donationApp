@@ -1,0 +1,16 @@
+{% for i in institutions %}
+    <div class="form-group form-group--checkbox">
+      <label>
+        <input type="radio" name="organization" value="{{ i.pk }}" class="institution-radio"/>
+        <span class="checkbox radio"></span>
+        <span class="description">
+
+          <div class="title">{{ i.name }}</div>
+          <div class="subtitle">
+            {{ i.description }}
+          </div>
+
+        </span>
+      </label>
+    </div>
+{% endfor %}

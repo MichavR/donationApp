@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+        <header class="header--form-page">
+        {% include 'menu.html' %}
+            <div class="slogan container container--90">
+                <div class="slogan--item">
+                    <h2>Twój profil:</h2>
+                    <table class="profile_">
+                        <tr><td class="td-left">Imię:</td><td class="td-right">{{ user_data.user.first_name }}</td></tr>
+                        <tr><td class="td-left">Nazwisko:</td><td class="td-right">{{ user_data.user.last_name }}</td></tr>
+                        <tr><td class="td-left">E-mail:</td><td class="td-right">{{ user_data.user.email }}</td></tr>
+                    </table><br>
+                    <h2>Twoje donacje:</h2>
+                    <table class="profile_">
+                        <th class="profile-th">Ilość worków</th>
+                        <th class="profile-th">Co zostało przekazane</th>
+                        <th class="profile-th">Instytucja</th>
+                        <th class="profile-th">Odebrane</th>
+                        {% for donation in user_donations %}
+                            <tr class="donation-row_">
+                                <td class="profile-donations">{{ donation.quantity }}</td>
+                                <td class="profile-donations">{% for category in donation.categories.all %}
+                                    {% if forloop.last %}
+                                        {{ category.name }}
+                                    {% else %}
+                                        {{ category.name }},
+                                    {% endif %}
+                                {% endfor %}</td>
+                                <td class="profile-donations">{{ donation.institution }}</td>
+                                <td class="profile-donations" id="donation-status">
+                                    {% if donation.is_taken is False %}
+                                            <form class="status-form" action="" method="post">
+                                            {% csrf_token %}
+                                                <label>Nie
+                                                <input class="hide-row_" type="text" name="donation_id" value="{{ donation.pk }}" /></label>
+                                                <input type="submit" class="link-button" value="Zmień status">
+                                            </form>
+
+                                    {% else %}
+                                        <div class="donation-status_">Tak</div>
+                                    {% endif %}
+                                </td></tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </header>
+
+    {% include 'footer.html' %}
+{% endblock %}

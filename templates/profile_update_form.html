@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+        <header class="header--form-page">
+            {% include 'menu.html' %}
+
+            <section class="login-page">
+                <h2>Zaktualizuj swoje dane</h2>
+                <form action="" class="profile-update-form" method="post">
+                  {% csrf_token %}
+                  {% for field in form %}
+                      <div class="form-group">
+                          {{ field }}
+                      </div>
+                  {% endfor %}
+
+                    <div class="form-group">
+                        <label class="profile-label">Potwierdź hasło <input type="password"
+                                                                            name="password"
+                                                                            id="input-pass"/>
+                        </label><br>
+                        <br>
+                        <button class="btn" type="submit">Zaktualizuj</button>
+                        <button class="btn" type="button" onclick="location.href='{% url "change_password" %}'">Zmień hasło</button>
+                    </div>
+                </form>
+            </section>
+        </header>
+    {% include 'footer.html' %}
+{% endblock %}
